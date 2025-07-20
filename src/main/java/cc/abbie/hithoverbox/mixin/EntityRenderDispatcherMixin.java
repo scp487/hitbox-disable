@@ -13,13 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderDispatcherMixin {
-    private static boolean playerIsLookingAt(Entity entity) {
-        return entity.equals(Minecraft.getInstance().crosshairPickEntity);
-    }
     @Inject(method = "renderHitbox", at = @At("HEAD"), cancellable = true)
     private static void onlyRenderOnHoveredEntity(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
-        if (!playerIsLookingAt(entity) && HitHoverBoxClient.enabled) {
-            ci.cancel();
-        }
+        ci.cancel();
     }
 }
